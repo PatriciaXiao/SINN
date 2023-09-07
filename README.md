@@ -1,6 +1,6 @@
 # Sociologically-Informed Neural Network (SINN)
 
-Source code of our KDD 2022 paper: Predicting Opinion Dynamics via Sociologically-Informed Neural Networks [[Link to the paper]()]
+Source code of our KDD 2022 paper: Predicting Opinion Dynamics via Sociologically-Informed Neural Networks [[Link to the paper](https://arxiv.org/abs/2207.03990)]
 
 ![SINN-overview](image/SINN_overview.png)
 

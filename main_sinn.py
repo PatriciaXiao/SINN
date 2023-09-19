@@ -81,11 +81,11 @@ class load_data(Dataset):
         previous = []
         # num_users usage: align the #num_users users together
         for iu in range(num_users):
-            tmpx = sequence[sequence[:,0]==iu,2]
-            tmpy = sequence[sequence[:,0]==iu,1]
+            tmpx = sequence[sequence[:,0]==iu,2] # time
+            tmpy = sequence[sequence[:,0]==iu,1] # opinion
             if len(tmpx)>0: 
-                tmpx = np.append(tmpx, 1.)
-                tmpy = np.append(tmpy, tmpy[-1])
+                tmpx = np.append(tmpx, 1.) # time append 1.
+                tmpy = np.append(tmpy, tmpy[-1]) # last one
             else:
                 tmpx = np.array([0,1])
                 tmpy = np.array([initial_u[iu],initial_u[iu]])

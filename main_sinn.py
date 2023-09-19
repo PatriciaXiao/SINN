@@ -293,6 +293,7 @@ def main_sinn(data_type, method, root_path):
     elif method=="SINN":
         _method = sinn
 
+    # here
     torch.manual_seed(100)
     model = _method.model(type=opt.activation_func, num_users=num_users, hidden_features=opt.hidden_features, 
                           num_hidden_layers=opt.num_hidden_layers, type_odm=opt.type_odm, alpha=opt.alpha, beta=opt.beta, K=opt.K, 

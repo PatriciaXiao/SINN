@@ -260,7 +260,7 @@ def main_sinn(data_type, method, root_path):
         train_period = 0.7
         val_period = 0.8
 
-    train_sequence = sequence[sequence[:,2]<train_period,:]
+    train_sequence = sequence[sequence[:,2]<train_period,:] # sequence[:,2] is: time
     train_dataset = load_data(train_sequence, num_users=num_users, initial_u=initial_u)
 
     val_sequence = sequence[(sequence[:,2]>=train_period)&(sequence[:,2]<val_period),:]
@@ -291,7 +291,7 @@ def main_sinn(data_type, method, root_path):
     elif method=="SLANT+":
         _method = slant_plus
     elif method=="SINN":
-        _method = sinn
+        _method = sinn # here
 
     # here
     torch.manual_seed(100)
@@ -305,6 +305,7 @@ def main_sinn(data_type, method, root_path):
     ###############################################################################
     #print("Training network...")
     if method!='Voter':
+        # here to enter the pipeline (with batch size info)
         training.train(model=model, train_dataloader=train_dataloader, val_dataloader=val_dataloader, epochs=num_epochs, lr=opt.lr,
                        loss_fn=_method.loss_function, method=method, input_sequence=sequence)
     #print("Network trained...")

@@ -79,6 +79,7 @@ class load_data(Dataset):
         model_out = []
        
         previous = []
+        # num_users usage: align the #num_users users together
         for iu in range(num_users):
             tmpx = sequence[sequence[:,0]==iu,2]
             tmpy = sequence[sequence[:,0]==iu,1]
@@ -241,7 +242,7 @@ def main_sinn(data_type, method, root_path):
     if not (method=="SINN" or method=="NN"):
         df["opinion"] = df["opinion"]/(nclasses-1)
 
-    sequence = np.array(df[["user_id","opinion","time"]])
+    sequence = np.array(df[["user_id","opinion","time"]]) # this line
     initial_u = np.loadtxt("working/initial_"+data_type+".txt", delimiter=',', dtype='float')
     
     num_users = int(1 + np.max(sequence[:,0]))

@@ -84,8 +84,8 @@ class load_data(Dataset):
             tmpx = sequence[sequence[:,0]==iu,2] # time
             tmpy = sequence[sequence[:,0]==iu,1] # opinion
             if len(tmpx)>0: 
-                tmpx = np.append(tmpx, 1.) # time append 1.
-                tmpy = np.append(tmpy, tmpy[-1]) # last one
+                tmpx = np.append(tmpx, 1.) # time append 1. (1: last moment)
+                tmpy = np.append(tmpy, tmpy[-1]) # last one, repeat
             else:
                 tmpx = np.array([0,1])
                 tmpy = np.array([initial_u[iu],initial_u[iu]])
@@ -97,7 +97,7 @@ class load_data(Dataset):
         opinion_history = rolling_matrix(sequence[:,1])
         time_history = rolling_matrix(sequence[:,2])
 
-        dT = np.stack([user_history,opinion_history,time_history], axis=-1) 
+        dT = np.stack([user_history,opinion_history,time_history], axis=-1) # stack the last dim
         history = dT[:,:-1,:]
         model_out = dT[:,-1,:]
 

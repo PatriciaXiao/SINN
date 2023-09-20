@@ -98,7 +98,7 @@ class load_data(Dataset):
         time_history = rolling_matrix(sequence[:,2])
 
         dT = np.stack([user_history,opinion_history,time_history], axis=-1) # stack the last dim
-        history = dT[:,:-1,:]
+        history = dT[:,:-1,:] # throw away the last item
         model_out = dT[:,-1,:]
 
         self.previous = np.array(previous)

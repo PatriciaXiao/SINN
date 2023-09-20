@@ -56,6 +56,7 @@ def prediction2label(x):
 
 
 def rolling_matrix(x,window_size=21):
+    # https://numpy.org/doc/stable/reference/generated/numpy.lib.stride_tricks.as_strided.html
     x = x.flatten()
     n = x.shape[0]
     stride = x.strides[0]
@@ -93,6 +94,7 @@ class load_data(Dataset):
             previous.append( tmpf(times) )
         previous = np.array(previous).T
 
+        # forced reshape
         user_history = rolling_matrix(sequence[:,0])
         opinion_history = rolling_matrix(sequence[:,1])
         time_history = rolling_matrix(sequence[:,2])

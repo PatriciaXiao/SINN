@@ -59,7 +59,7 @@ def rolling_matrix(x,window_size=21):
     # https://numpy.org/doc/stable/reference/generated/numpy.lib.stride_tricks.as_strided.html
     x = x.flatten()
     n = x.shape[0]
-    stride = x.strides[0] # number of users
+    stride = x.strides[0] # number of users+1
     return np.lib.stride_tricks.as_strided(x, shape=(n-window_size+1, window_size), strides=(stride,stride) ).copy()
 
 
@@ -88,13 +88,13 @@ class load_data(Dataset):
                 tmpx = np.append(tmpx, 1.) # time append 1. (1: last moment)
                 tmpy = np.append(tmpy, tmpy[-1]) # last one, repeat
             else:
-                tmpx = np.array([0,1])
+                tmpx = np.array([0,1]) # place-holder
                 tmpy = np.array([initial_u[iu],initial_u[iu]])
             tmpf = interp1d(tmpx, tmpy, kind='next', fill_value="extrapolate")
-            previous.append( tmpf(times) )
+            previous.append( tmpf(times) ) # never added the last padding
         previous = np.array(previous).T
 
-        # forced reshape: to shape (#uids, #uids)
+        # forced reshape: to a sequence of shape (#uids, #uids)
         user_history = rolling_matrix(sequence[:,0])
         opinion_history = rolling_matrix(sequence[:,1])
         time_history = rolling_matrix(sequence[:,2])
@@ -103,9 +103,9 @@ class load_data(Dataset):
         history = dT[:,:-1,:] # throw away the last item
         model_out = dT[:,-1,:]
 
-        self.previous = np.array(previous)
-        self.history = history
-        self.model_out = model_out
+        self.previous = np.array(previous) 
+        self.history = history      # no longer keeping the last appended item
+        self.model_out = model_out  # no longer keeping the last appended item
 
         self.datanum = len(self.model_out)
 

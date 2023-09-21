@@ -59,7 +59,7 @@ def rolling_matrix(x,window_size=21):
     # https://numpy.org/doc/stable/reference/generated/numpy.lib.stride_tricks.as_strided.html
     x = x.flatten()
     n = x.shape[0]
-    stride = x.strides[0]
+    stride = x.strides[0] # number of users
     return np.lib.stride_tricks.as_strided(x, shape=(n-window_size+1, window_size), strides=(stride,stride) ).copy()
 
 
@@ -94,7 +94,7 @@ class load_data(Dataset):
             previous.append( tmpf(times) )
         previous = np.array(previous).T
 
-        # forced reshape
+        # forced reshape: to shape (#uids, #uids)
         user_history = rolling_matrix(sequence[:,0])
         opinion_history = rolling_matrix(sequence[:,1])
         time_history = rolling_matrix(sequence[:,2])

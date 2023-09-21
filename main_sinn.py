@@ -90,8 +90,10 @@ class load_data(Dataset):
             else:
                 tmpx = np.array([0,1]) # place-holder
                 tmpy = np.array([initial_u[iu],initial_u[iu]])
+            # https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html
+            # used to aooroximate a function f using given x and y
             tmpf = interp1d(tmpx, tmpy, kind='next', fill_value="extrapolate")
-            previous.append( tmpf(times) ) # never added the last padding
+            previous.append( tmpf(times) )
         previous = np.array(previous).T
 
         # forced reshape: to a sequence of shape (#uids, #uids)
@@ -103,7 +105,7 @@ class load_data(Dataset):
         history = dT[:,:-1,:] # throw away the last item
         model_out = dT[:,-1,:]
 
-        self.previous = np.array(previous) 
+        self.previous = np.array(previous) # correct shape of #num_users functions
         self.history = history      # no longer keeping the last appended item
         self.model_out = model_out  # no longer keeping the last appended item
 

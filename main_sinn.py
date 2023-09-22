@@ -91,7 +91,7 @@ class load_data(Dataset):
                 tmpx = np.array([0,1]) # place-holder
                 tmpy = np.array([initial_u[iu],initial_u[iu]])
             # https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html
-            # used to aooroximate a function f using given x and y
+            # used to aooroximate a function f using given x and y, for every user iu
             tmpf = interp1d(tmpx, tmpy, kind='next', fill_value="extrapolate")
             previous.append( tmpf(times) )
         previous = np.array(previous).T

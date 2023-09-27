@@ -59,7 +59,9 @@ def rolling_matrix(x,window_size=21):
     # https://numpy.org/doc/stable/reference/generated/numpy.lib.stride_tricks.as_strided.html
     x = x.flatten()
     n = x.shape[0] # number of users+1
+    # https://zhuanlan.zhihu.com/p/64933417
     # https://numpy.org/doc/stable/reference/generated/numpy.ndarray.strides.html
+    # The strides of an array tell us how many bytes we have to skip in memory to move to the next position along a certain axis.
     stride = x.strides[0] # Tuple of bytes to step in each dimension when traversing an array.
     return np.lib.stride_tricks.as_strided(x, shape=(n-window_size+1, window_size), strides=(stride,stride) ).copy()
 
